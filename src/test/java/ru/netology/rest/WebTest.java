@@ -34,7 +34,7 @@ public class WebTest {
         }
 
         $$("button")
-                .findBy(text("Забронировать"))
+                .findBy(text("Запланировать"))
                 .click();
     }
 
@@ -48,15 +48,15 @@ public class WebTest {
     void shouldSubmitValidForm() {
         submit(
                 "Москва",
-                "26.08.2026",
+                "26.08.2100",
                 "Иван Петров",
                 "+79012345678",
                 true
         );
 
-        $("[data-test-id=order-success]")
+        $("[data-test-id=success-notification]")
                 .shouldHave(text(
-                        "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."
+                        "Встреча успешно запланирована на "
                 ));
     }
 
@@ -64,7 +64,7 @@ public class WebTest {
     void shouldRejectInvalidName() {
         submit(
                 "Москва",
-                "26.08.2026",
+                "26.08.2100",
                 "Ivan Petrov",
                 "+79012345678",
                 true
@@ -80,7 +80,7 @@ public class WebTest {
     void shouldRejectEmptyName() {
         submit(
                 "Москва",
-                "26.08.2026",
+                "26.08.2100",
                 "",
                 "+79012345678",
                 true
@@ -96,14 +96,14 @@ public class WebTest {
     void shouldRejectInvalidPhone() {
         submit(
                 "Москва",
-                "26.08.2026",
+                "26.08.2100",
                 "Иван Петров",
                 "+7901234567",
                 true
         );
 
         assertEquals(
-                "Телефон указан неверно. Должно быть 11 цифр, например, +79012345678.",
+                "В поле телефона — только 11 цифр, символ + на первом месте.",
                 error("phone")
         );
     }
@@ -112,7 +112,7 @@ public class WebTest {
     void shouldRejectEmptyPhone() {
         submit(
                 "Москва",
-                "26.08.2026",
+                "26.08.2100",
                 "Иван Петров",
                 "",
                 true
@@ -128,7 +128,7 @@ public class WebTest {
     void shouldRejectUncheckedAgreement() {
         submit(
                 "Москва",
-                "26.08.2026",
+                "26.08.2100",
                 "Иван Петров",
                 "+79012345679",
                 false
