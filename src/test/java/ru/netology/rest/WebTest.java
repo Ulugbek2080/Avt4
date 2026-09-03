@@ -18,7 +18,7 @@ public class WebTest {
 
     @BeforeEach
     void openPage() {
-        open("http://localhost:9999");
+        open("http://localhost:7777");
     }
 
     private String date(int plusDays) {
@@ -33,7 +33,7 @@ public class WebTest {
         if (agree) {
             $("[data-test-id=agreement]").click();
         }
-        $$("button").findBy(text("Запланировать")).click();
+        $$("button").findBy(text("Забронировать")).click();
     }
 
     private SelenideElement error(String field) {
@@ -46,7 +46,7 @@ public class WebTest {
         submit("Москва", meetingDate, "Иван Петров", "+79012345678", true);
         $("[data-test-id=success-notification]")
                 .shouldBe(visible)
-                .shouldHave(text("Встреча успешно запланирована на " + meetingDate));
+                .shouldHave(text("Встреча успешно забронирована на " + meetingDate));
     }
 
     @Test
