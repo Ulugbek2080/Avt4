@@ -15,7 +15,7 @@ public class WebTest {
 
     @BeforeEach
     void openPage() {
-        open("http://0.0.0.0:9999");
+        open("http://localhost:9999");
     }
     private String date(int plusDays) {
         return LocalDate.now().plusDays(plusDays).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
@@ -48,14 +48,6 @@ public class WebTest {
     private SelenideElement error(String field) {
         return $("[data-test-id=" + field + "] .input__sub");
 
-    }
-
-    @Test
-    void shouldSubmitValidForm() {
-        submit("Москва", date(3), "Иван Петров", "+79012345678", true);
-        $("[data-test-id=order-success]")
-                .shouldBe(visible)
-                .shouldHave(text("Ваша заявка успешно отправлена!"));
     }
 
     @Test
@@ -93,5 +85,13 @@ public class WebTest {
         submit("Москва", date(3), "Иван Петров", "+79012345678", false);
         $("[data-test-id=agreement]").shouldHave(cssClass("input_invalid"));
         $("[data-test-id=order-success]").shouldNotBe(visible);
+    }
+
+    @Test
+    void shouldSubmitValidForm() {
+        submit("Москва", date(3), "Иван Петров", "+79012345699", true);
+        $("[data-test-id=order-success]")
+                .shouldBe(visible)
+                .shouldHave(text("Встреча успешно запланирована на " + date(3)));
     }
 }
