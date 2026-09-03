@@ -67,7 +67,7 @@ public class WebTest {
 
     @Test
     void shouldRejectInvalidPhone() {
-        submit("Москва", date(3), "Иван Петров", "+7901234567", true);
+        submit("Москва", date(3), "Иван Петров", "+790127", true);
         $("[data-test-id=phone]").shouldHave(cssClass("input_invalid"));
         error("phone").shouldHave(
                 text("Телефон указан неверно. Должно быть 11 цифр"));
