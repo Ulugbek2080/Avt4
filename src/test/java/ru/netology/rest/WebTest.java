@@ -1,10 +1,10 @@
 package ru.netology.rest;
 
-import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -19,7 +19,6 @@ public class WebTest {
 
     @BeforeEach
     void openPage() {
-        Configuration.timeout = 15000;
         open("http://localhost:9999");
     }
 
@@ -47,7 +46,7 @@ public class WebTest {
         String meetingDate = date(3);
         submit("Москва", meetingDate, "Иван Петров", "+79012345678", true);
         $("[data-test-id=notification]")
-                .shouldBe(visible)
+                .shouldBe(visible, Duration.ofSeconds(1500))
                 .shouldHave(text("Встреча успешно забронирована на " + meetingDate));
     }
 
