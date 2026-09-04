@@ -1,5 +1,6 @@
 package ru.netology.rest;
 
+import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,8 @@ public class WebTest {
 
     @BeforeEach
     void openPage() {
-        open("http://localhost:7777");
+        Configuration.timeout = 15000;
+        open("http://localhost:9999");
     }
 
     private String date(int plusDays) {
@@ -44,14 +46,14 @@ public class WebTest {
     void shouldSubmitValidForm() {
         String meetingDate = date(3);
         submit("Москва", meetingDate, "Иван Петров", "+79012345678", true);
-        $("[data-test-id=success-notification]")
+        $("[data-test-id=notification]")
                 .shouldBe(visible)
                 .shouldHave(text("Встреча успешно забронирована на " + meetingDate));
     }
 
     @Test
     void shouldRejectInvalidName() {
-        submit("Москва", date(3), "Ivan Petrov", "+79012345678", true);
+        submit("Москва", date(3), "Ivan Petrov", "+79912345678", true);
         error("name").shouldBe(visible).shouldHave(
                 exactText("Имя и Фамилия указаные неверно. Допустимы только русские буквы, пробелы и дефисы."));
     }
